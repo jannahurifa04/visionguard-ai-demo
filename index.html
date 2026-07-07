@@ -1,492 +1,534 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>VisionGuard AI Demo</title>
+
 <style>
-* {
-    box-sizing:border-box;
+:root{
+    --bg:#050816;
+    --panel:#101827;
+    --panel2:#0b1220;
+    --border:#26364f;
+    --purple:#7c3aed;
+    --purple2:#a78bfa;
+    --green:#22c55e;
+    --red:#ef4444;
+    --text:#ffffff;
+    --muted:#94a3b8;
 }
 
-html, body {
+*{box-sizing:border-box}
+
+html,body{
     margin:0;
-    width:100%;
-    overflow-x:hidden;
-    background:#070b16;
-    color:white;
-    font-family:Arial, sans-serif;
+    background:radial-gradient(circle at top,#111827 0,#050816 45%,#020617 100%);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:18px;
+    line-height:1.5;
 }
 
-.page {
-    padding:24px;
-    max-width:100%;
+a{color:#c4b5fd;text-decoration:none}
+a:hover{text-decoration:underline}
+
+.page{
+    width:min(1440px,96vw);
+    margin:0 auto;
+    padding:28px 0 40px;
 }
 
-.hero {
-    background:
-        linear-gradient(135deg,rgba(124,58,237,.95),rgba(17,24,39,.96)),
-        radial-gradient(circle at top right,#ef4444,transparent 35%);
-    padding:42px;
-    border-radius:26px;
-    margin-bottom:20px;
-    box-shadow:0 25px 70px rgba(0,0,0,.45);
+.hero{
     position:relative;
     overflow:hidden;
+    border-radius:28px;
+    padding:56px;
+    min-height:330px;
+    background:
+        radial-gradient(circle at 85% 15%,rgba(239,68,68,.35),transparent 30%),
+        linear-gradient(135deg,#6d28d9,#1e1b4b 48%,#111827);
+    border:1px solid rgba(167,139,250,.45);
+    box-shadow:0 30px 90px rgba(0,0,0,.45);
 }
 
-.hero h1 {
-    font-size:52px;
-    margin:8px 0;
-    letter-spacing:-1px;
-}
-
-.hero .sub {
-    font-size:20px;
-    color:#e5e7eb;
-}
-
-.hero .tagline {
-    color:#cbd5e1;
-    font-size:15px;
-}
-
-.badge {
-    display:inline-block;
-    background:#16a34a;
-    padding:8px 13px;
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    background:rgba(34,197,94,.16);
+    border:1px solid rgba(34,197,94,.55);
+    color:#bbf7d0;
     border-radius:999px;
-    font-size:12px;
-    font-weight:bold;
+    font-weight:800;
+    font-size:.8rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
 }
 
-.owner {
+.hero h1{
+    margin:18px 0 10px;
+    font-size:clamp(3rem,7vw,6.5rem);
+    line-height:.95;
+    letter-spacing:-.06em;
+}
+
+.hero .sub{
+    font-size:clamp(1.2rem,2vw,1.75rem);
+    color:#eef2ff;
+    max-width:850px;
+    font-weight:700;
+}
+
+.hero .tagline{
+    color:#dbeafe;
+    max-width:850px;
+    font-size:1.08rem;
+}
+
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:28px;
+}
+
+.btn{
+    border:0;
+    border-radius:14px;
+    padding:15px 20px;
+    font-weight:800;
+    font-size:1rem;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+    box-shadow:0 10px 24px rgba(124,58,237,.35);
+}
+
+.btn.secondary{
+    background:rgba(15,23,42,.62);
+    border:1px solid rgba(255,255,255,.18);
+}
+
+.owner{
     position:absolute;
-    right:28px;
-    bottom:24px;
+    right:34px;
+    bottom:30px;
     text-align:right;
     color:#e5e7eb;
-    font-size:13px;
+    font-size:.95rem;
 }
 
-.kpi-grid {
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0, 1fr));
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     gap:16px;
-    margin-bottom:18px;
+    margin:30px 0 16px;
 }
 
-.kpi-card {
-    background:#111827;
-    border:1px solid #273449;
-    border-radius:18px;
-    padding:22px;
-    box-shadow:0 12px 30px rgba(0,0,0,.28);
+.section-title h2{
+    margin:0;
+    font-size:2rem;
 }
 
-.kpi-title {
-    color:#94a3b8;
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.kpi-value {
-    font-size:36px;
-    font-weight:bold;
-    color:#a78bfa;
-}
-
-.grid {
+.kpi-grid{
     display:grid;
-    grid-template-columns:minmax(0, 1.08fr) minmax(0, 1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:18px;
+    margin:22px 0;
 }
 
-.card {
-    background:#111827;
-    border:1px solid #273449;
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 12px 30px rgba(0,0,0,.26);
-    max-width:100%;
+.kpi-card{
+    background:rgba(16,24,39,.92);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.28);
 }
 
-.camera {
-    height:360px;
+.kpi-title{
+    color:var(--muted);
+    font-size:.95rem;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.kpi-value{
+    font-size:3rem;
+    line-height:1;
+    font-weight:900;
+    color:var(--purple2);
+}
+
+.main-grid{
+    display:grid;
+    grid-template-columns:1.2fr .85fr;
+    gap:22px;
+}
+
+.card{
+    background:rgba(16,24,39,.94);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 18px 45px rgba(0,0,0,.32);
+}
+
+.card h2{
+    font-size:1.65rem;
+    margin:0 0 18px;
+}
+
+.camera{
+    height:560px;
     position:relative;
     background:#020617;
-    border-radius:16px;
+    border-radius:20px;
     overflow:hidden;
-    border:2px solid #4f46e5;
+    border:2px solid #5b5ff0;
 }
 
-.video-bg {
+.video-bg{
     position:absolute;
     inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
-    filter:blur(20px) brightness(.45);
+    filter:blur(22px) brightness(.45);
     transform:scale(1.18);
-    z-index:0;
 }
 
-.video-main {
+.video-main{
     position:absolute;
     top:0;
     left:50%;
-    transform:translateX(-50%);
     height:100%;
     width:auto;
+    transform:translateX(-50%);
     z-index:1;
 }
 
-.camera:before {
+.camera:before{
     content:"";
     position:absolute;
     inset:0;
     background:
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px),
-        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px);
-    background-size:40px 40px;
+      linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px),
+      linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px);
+    background-size:42px 42px;
     z-index:2;
     pointer-events:none;
 }
 
-.camera:after {
+.camera:after{
     content:"";
     position:absolute;
     inset:0;
-    background:repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,.04) 0px,
-        rgba(255,255,255,.04) 1px,
-        transparent 1px,
-        transparent 5px
-    );
+    background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0,rgba(255,255,255,.04) 1px,transparent 1px,transparent 5px);
+    opacity:.45;
     z-index:2;
-    opacity:.35;
     pointer-events:none;
 }
 
-.rec {
+.rec{
     position:absolute;
-    top:14px;
-    left:14px;
-    color:#ef4444;
-    font-weight:bold;
+    top:18px;
+    left:18px;
+    color:#ff5b5b;
+    font-weight:900;
     z-index:5;
     animation:blink 1s infinite;
 }
 
-@keyframes blink {
-    0%,100% { opacity:1; }
-    50% { opacity:.35; }
-}
+@keyframes blink{50%{opacity:.35}}
 
-.cam-id {
+.cam-id{
     position:absolute;
-    top:14px;
-    right:14px;
-    background:rgba(2,6,23,.78);
-    padding:8px 12px;
+    top:18px;
+    right:18px;
+    background:rgba(2,6,23,.82);
+    border:1px solid rgba(255,255,255,.14);
+    padding:10px 16px;
     border-radius:999px;
     z-index:5;
-    font-weight:bold;
+    font-weight:900;
 }
 
-.detect-box {
+.detect-box{
     position:absolute;
-    width:150px;
-    height:235px;
-    border:3px solid #22c55e;
-    border-radius:12px;
-    left:45%;
-    top:58px;
+    width:160px;
+    height:250px;
+    border:4px solid var(--green);
+    border-radius:14px;
+    left:46%;
+    top:120px;
     z-index:4;
-    box-shadow:0 0 20px rgba(34,197,94,.7);
-    animation:trackPulse 1.5s infinite;
+    box-shadow:0 0 30px rgba(34,197,94,.8);
+    animation:trackPulse 1.4s infinite;
 }
 
-@keyframes trackPulse {
-    0%,100% { box-shadow:0 0 14px rgba(34,197,94,.5); }
-    50% { box-shadow:0 0 32px rgba(34,197,94,.95); }
+@keyframes trackPulse{
+    50%{box-shadow:0 0 45px rgba(34,197,94,1)}
 }
 
-.detect-label {
+.detect-label{
     position:absolute;
-    left:45%;
-    top:30px;
-    background:#22c55e;
+    left:46%;
+    top:83px;
+    background:var(--green);
     color:#052e16;
-    padding:7px 11px;
-    border-radius:8px;
-    font-weight:bold;
-    font-size:12px;
+    padding:9px 14px;
+    border-radius:10px;
+    font-weight:900;
+    font-size:.9rem;
     z-index:5;
 }
 
-.alert-chip {
+.alert-chip{
     position:absolute;
-    bottom:16px;
-    right:16px;
-    background:#ef4444;
-    padding:11px 15px;
-    border-radius:12px;
-    font-weight:bold;
+    bottom:22px;
+    right:22px;
+    background:var(--red);
+    color:white;
+    padding:14px 20px;
+    border-radius:16px;
+    font-weight:900;
     z-index:5;
-    box-shadow:0 0 22px rgba(239,68,68,.75);
-    animation: dangerPulse 1.2s infinite;
+    box-shadow:0 0 28px rgba(239,68,68,.75);
+    animation:dangerPulse 1.2s infinite;
 }
 
-@keyframes dangerPulse {
-    0%,100% { transform:scale(1); }
-    50% { transform:scale(1.05); }
+@keyframes dangerPulse{
+    50%{transform:scale(1.05)}
 }
 
-.meta-box {
+.meta-box{
     position:absolute;
-    left:16px;
-    bottom:16px;
-    background:rgba(2,6,23,.82);
-    border:1px solid rgba(148,163,184,.45);
-    padding:12px;
-    border-radius:12px;
-    line-height:1.6;
-    font-size:12px;
-    z-index:5;
-}
-
-button {
-    background:#7c3aed;
-    color:white;
-    border:0;
-    padding:12px 14px;
-    border-radius:11px;
-    cursor:pointer;
-    margin:5px;
-    font-weight:bold;
-}
-
-button:hover {
-    background:#6d28d9;
-}
-
-.input-row {
-    display:flex;
-    gap:8px;
-    margin-top:12px;
-}
-
-input {
-    flex:1;
-    padding:13px;
-    border-radius:11px;
-    border:1px solid #334155;
-    background:#020617;
-    color:white;
-}
-
-.chat-box {
-    margin-top:14px;
-    background:#020617;
-    border-radius:14px;
+    left:22px;
+    bottom:22px;
+    background:rgba(2,6,23,.85);
+    border:1px solid rgba(148,163,184,.5);
     padding:16px;
-    border:1px solid #253047;
-    min-height:190px;
-    max-height:280px;
-    overflow-y:auto;
+    border-radius:16px;
+    line-height:1.7;
+    font-size:.95rem;
+    z-index:5;
 }
 
-.message {
-    max-width:82%;
-    padding:12px 14px;
-    border-radius:14px;
-    margin:8px 0;
-    line-height:1.55;
-    font-size:14px;
+.caption{
+    color:#bfdbfe;
+    margin:16px 0 0;
 }
 
-.user-msg {
+.assistant{
+    display:flex;
+    flex-direction:column;
+    min-height:560px;
+}
+
+.quick{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.quick button,
+.input-row button,
+.feature button{
+    background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+    border:0;
+    color:white;
+    padding:12px 16px;
+    border-radius:12px;
+    font-weight:900;
+    cursor:pointer;
+    font-size:.95rem;
+}
+
+.chat-box{
+    flex:1;
+    min-height:330px;
+    margin-top:16px;
+    background:#020617;
+    border:1px solid #26364f;
+    border-radius:18px;
+    padding:18px;
+    overflow:auto;
+}
+
+.message{
+    max-width:84%;
+    padding:14px 16px;
+    border-radius:16px;
+    margin:12px 0;
+    font-size:1rem;
+}
+
+.user-msg{
     background:#7c3aed;
     margin-left:auto;
-    border-bottom-right-radius:4px;
+    border-bottom-right-radius:5px;
 }
 
-.ai-msg {
-    background:#111827;
+.ai-msg{
+    background:#101827;
     border:1px solid #334155;
     margin-right:auto;
-    border-bottom-left-radius:4px;
+    border-bottom-left-radius:5px;
 }
 
-.live-alert {
-    margin-top:18px;
-    background:linear-gradient(135deg, rgba(127,29,29,.6), rgba(17,24,39,.96));
-    border:1px solid rgba(248,113,113,.7);
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 0 30px rgba(239,68,68,.28);
-    animation:pulseGlow 1.8s infinite;
+.input-row{
+    display:flex;
+    gap:10px;
+    margin-top:14px;
 }
 
-.alert-top {
+input{
+    flex:1;
+    background:#020617;
+    border:1px solid #334155;
+    color:white;
+    border-radius:14px;
+    padding:15px;
+    font-size:1rem;
+}
+
+.live-alert{
+    margin-top:22px;
+    background:linear-gradient(135deg,rgba(127,29,29,.7),rgba(17,24,39,.96));
+    border:1px solid rgba(248,113,113,.75);
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 0 35px rgba(239,68,68,.25);
+}
+
+.alert-top{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:10px;
+    gap:16px;
 }
 
-.alert-badge {
+.alert-top h2{
+    margin:0;
+    font-size:1.8rem;
+}
+
+.alert-badge{
     background:#ef4444;
-    color:white;
-    padding:8px 13px;
+    padding:10px 16px;
     border-radius:999px;
-    font-size:12px;
-    font-weight:bold;
+    font-weight:900;
 }
 
-.alert-grid {
+.alert-grid{
     display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:12px;
-    margin-top:12px;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:18px;
 }
 
-.alert-item {
-    background:rgba(2,6,23,.5);
-    border-radius:12px;
-    padding:13px;
+.alert-item{
+    background:rgba(2,6,23,.55);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    padding:16px;
 }
 
-.alert-label {
+.alert-label{
     color:#94a3b8;
-    font-size:12px;
-    margin-bottom:5px;
+    font-size:.9rem;
 }
 
-.alert-value {
-    font-weight:bold;
+.alert-value{
+    font-weight:900;
+    font-size:1.05rem;
 }
 
-.clickable {
+.clickable{
     cursor:pointer;
-    border:1px solid rgba(124,58,237,.7);
+    border-color:#a78bfa;
 }
 
-.clickable:hover {
-    background:rgba(124,58,237,.18);
-}
-
-@keyframes pulseGlow {
-    0% { box-shadow:0 0 16px rgba(239,68,68,.18); }
-    50% { box-shadow:0 0 36px rgba(239,68,68,.5); }
-    100% { box-shadow:0 0 16px rgba(239,68,68,.18); }
-}
-
-.prediction-box {
+.prediction-box{
     display:flex;
-    gap:30px;
     align-items:center;
+    gap:30px;
 }
 
-.prediction-score {
-    width:155px;
-    height:155px;
-    min-width:155px;
+.prediction-score{
+    width:170px;
+    height:170px;
+    min-width:170px;
     border-radius:50%;
     background:radial-gradient(circle,#ef4444,#7f1d1d);
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    font-size:40px;
-    font-weight:bold;
-    box-shadow:0 0 38px rgba(239,68,68,.6);
+    font-size:3rem;
+    font-weight:900;
+    box-shadow:0 0 45px rgba(239,68,68,.6);
 }
 
-.prediction-score small {
-    font-size:14px;
+.prediction-score small{
+    font-size:.9rem;
     color:#fecaca;
 }
 
-.risk-line {
-    height:10px;
+.risk-line{
+    height:12px;
     background:#1e293b;
     border-radius:999px;
-    margin:14px 0;
     overflow:hidden;
+    margin:16px 0;
 }
 
-.risk-fill {
+.risk-fill{
     height:100%;
     width:84%;
     background:linear-gradient(90deg,#22c55e,#f97316,#ef4444);
 }
 
-.feature-grid, .evidence-grid {
+.feature-grid,.evidence-grid{
     display:grid;
-    grid-template-columns:repeat(3, minmax(0,1fr));
-    gap:14px;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
 }
 
-.feature, .evidence {
+.feature,.evidence{
     background:#020617;
-    border:1px solid #253047;
-    border-radius:14px;
-    padding:16px;
-    line-height:1.6;
+    border:1px solid #26364f;
+    border-radius:18px;
+    padding:20px;
+    line-height:1.65;
 }
 
-.evidence {
-    border-color:#334155;
+.evidence{
     cursor:pointer;
 }
 
-.evidence:hover {
-    border-color:#8b5cf6;
+.evidence:hover{
+    border-color:#a78bfa;
 }
 
-table {
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td {
-    padding:12px;
-    border-bottom:1px solid #253047;
-    text-align:left;
-}
-
-th {
-    background:#312e81;
-}
-
-.risk {
-    padding:6px 10px;
-    border-radius:999px;
-    font-weight:bold;
-    font-size:12px;
-}
-
-.low { background:#064e3b; color:#86efac; }
-.medium { background:#7c2d12; color:#fdba74; }
-.high { background:#7f1d1d; color:#fca5a5; }
-
-.footer {
-    text-align:center;
-    margin-top:22px;
-    padding:28px;
+.footer{
+    margin-top:24px;
     background:linear-gradient(135deg,#312e81,#111827);
-    border-radius:20px;
     border:1px solid #4f46e5;
+    border-radius:24px;
+    text-align:center;
+    padding:36px;
 }
 
-.contact {
-    color:#cbd5e1;
-    line-height:1.8;
+.contact{
+    color:#dbeafe;
+    line-height:1.9;
 }
 
-.modal {
+.modal{
     display:none;
     position:fixed;
     inset:0;
@@ -497,128 +539,115 @@ th {
     padding:24px;
 }
 
-.modal-content {
-    width:min(1150px, 96vw);
+.modal-content{
+    width:min(1180px,96vw);
     max-height:92vh;
     overflow:auto;
     background:#0f172a;
     border:1px solid #4f46e5;
-    border-radius:20px;
-    padding:22px;
-    box-shadow:0 30px 100px rgba(0,0,0,.65);
+    border-radius:24px;
+    padding:26px;
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
 }
 
-.modal-top {
+.modal-top{
     display:flex;
     justify-content:space-between;
+    gap:16px;
     align-items:center;
-    margin-bottom:16px;
 }
 
-.close {
+.close{
     background:#ef4444;
 }
 
-.evidence-layout {
+.evidence-layout{
     display:grid;
     grid-template-columns:1.2fr .9fr;
-    gap:16px;
+    gap:18px;
+    margin-top:16px;
 }
 
-.evidence-video {
+.evidence-video{
     width:100%;
-    max-height:540px;
+    max-height:560px;
     background:#020617;
-    border-radius:14px;
+    border-radius:18px;
     border:1px solid #334155;
 }
 
-.ai-summary {
+.ai-summary,.timeline{
     background:#020617;
     border:1px solid #334155;
-    border-radius:14px;
-    padding:16px;
-    line-height:1.65;
+    border-radius:18px;
+    padding:18px;
 }
 
-.timeline {
-    margin-top:14px;
-    padding:14px;
-    background:#020617;
-    border:1px solid #334155;
-    border-radius:14px;
+.timeline{
+    margin-top:16px;
 }
 
-.timeline-item {
+.timeline-item{
     display:flex;
-    gap:12px;
-    padding:8px 0;
+    gap:14px;
+    padding:10px 0;
     border-bottom:1px solid #1e293b;
 }
 
-.timeline-item:last-child {
-    border-bottom:0;
+.timeline-item:last-child{border-bottom:0}
+.time{color:#a78bfa;font-weight:900;width:70px}
+
+@media(max-width:1100px){
+    .main-grid,.evidence-layout{grid-template-columns:1fr}
+    .kpi-grid,.alert-grid{grid-template-columns:repeat(2,1fr)}
+    .feature-grid,.evidence-grid{grid-template-columns:1fr}
+    .owner{position:static;text-align:left;margin-top:20px}
+    .camera{height:480px}
 }
 
-.time {
-    color:#a78bfa;
-    font-weight:bold;
-    width:60px;
-}
-
-@media (max-width: 1000px) {
-    .kpi-grid, .grid, .feature-grid, .evidence-grid, .alert-grid, .evidence-layout {
-        grid-template-columns:1fr;
-    }
-    .owner {
-        position:static;
-        text-align:left;
-        margin-top:20px;
-    }
-    .hero h1 {
-        font-size:40px;
-    }
+@media(max-width:700px){
+    body{font-size:16px}
+    .page{width:94vw;padding:18px 0}
+    .hero{padding:30px}
+    .kpi-grid,.alert-grid{grid-template-columns:1fr}
+    .camera{height:400px}
+    .prediction-box{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 
 <body>
 <div class="page">
-
-    <div class="hero">
-        <div class="badge">ENTERPRISE DEMO</div>
+    <section class="hero">
+        <div class="badge">🛡️ Enterprise AI CCTV Demo</div>
         <h1>VisionGuard AI</h1>
-        <p class="sub">AI-Powered CCTV Surveillance & Investigation Platform</p>
+        <div class="sub">AI-Powered CCTV Surveillance & Investigation Platform</div>
         <p class="tagline">Detect suspicious behavior • Predict threats • Alert security teams • Investigate faster</p>
-
-        <div class="owner">
-            Built by <b>Urifatul Jannah</b><br>
-            Computer Vision & AI Developer
+        <div class="hero-actions">
+            <button class="btn" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">▶ Watch Demo</button>
+            <button class="btn secondary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
         </div>
-    </div>
+        <div class="owner">Built by <b>Urifatul Jannah</b><br>Computer Vision & AI Developer</div>
+    </section>
 
-    <div class="kpi-grid">
+    <section class="kpi-grid">
         <div class="kpi-card"><div class="kpi-title">🚨 Threat Level</div><div class="kpi-value">82%</div></div>
         <div class="kpi-card"><div class="kpi-title">👤 People Detected</div><div class="kpi-value">4</div></div>
         <div class="kpi-card"><div class="kpi-title">⚠ Alerts Today</div><div class="kpi-value">12</div></div>
         <div class="kpi-card"><div class="kpi-title">🤖 AI Confidence</div><div class="kpi-value">96%</div></div>
-    </div>
+    </section>
 
-    <div class="grid">
+    <section id="demo" class="main-grid">
         <div class="card">
             <h2>📹 AI CCTV Monitoring</h2>
-
             <div class="camera">
                 <video class="video-bg" src="demo_clip.mp4" autoplay muted loop playsinline></video>
                 <video class="video-main" src="demo_clip.mp4" autoplay muted loop playsinline></video>
-
                 <div class="rec">● REC</div>
                 <div class="cam-id">CAM 01 · Main Entrance</div>
-
                 <div id="detectLabel" class="detect-label">Person ID 3 · HIGH RISK</div>
                 <div id="detectBox" class="detect-box"></div>
                 <div id="alertChip" class="alert-chip">LOITERING 48s</div>
-
                 <div id="metaBox" class="meta-box">
                     Tracking ID: 3<br>
                     Confidence: 96%<br>
@@ -626,23 +655,17 @@ th {
                     Risk Score: 84%
                 </div>
             </div>
-
-            <p style="color:#94a3b8;">Demo CCTV video with AI overlay. Simulated public demo using sample footage.</p>
+            <p class="caption">Demo CCTV video with AI overlay. Simulated public demo using sample footage.</p>
         </div>
 
-        <div class="card">
+        <div class="card assistant">
             <h2>🤖 AI Security Assistant</h2>
-
-            <button onclick="askDemo('Who loitered today?')">Who loitered today?</button>
-            <button onclick="askDemo('Who has highest risk?')">Highest risk</button>
-            <button onclick="askDemo('Show latest evidence')">Latest evidence</button>
-            <button onclick="askDemo('Generate security report')">Security report</button>
-
-            <div class="input-row">
-                <input id="q" placeholder="Ask about demo CCTV events..." onkeydown="if(event.key==='Enter') askDemo()">
-                <button onclick="askDemo()">Ask</button>
+            <div class="quick">
+                <button onclick="askDemo('Who loitered today?')">Who loitered today?</button>
+                <button onclick="askDemo('Who has highest risk?')">Highest risk</button>
+                <button onclick="askDemo('Show latest evidence')">Latest evidence</button>
+                <button onclick="askDemo('Generate security report')">Security report</button>
             </div>
-
             <div id="chat" class="chat-box">
                 <div class="message user-msg">Who loitered today?</div>
                 <div class="message ai-msg">
@@ -651,32 +674,35 @@ th {
                     Risk Level: Medium.
                 </div>
             </div>
+            <div class="input-row">
+                <input id="q" placeholder="Ask about demo CCTV events..." onkeydown="if(event.key==='Enter') askDemo()">
+                <button onclick="askDemo()">Ask</button>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="live-alert">
+    <section class="live-alert">
         <div class="alert-top">
             <div>
-                <h2 style="margin:0;">🚨 Live Alert</h2>
+                <h2>🚨 Live Alert</h2>
                 <p style="margin:6px 0 0;color:#fecaca;">Watchlist Match Detected at Main Entrance</p>
             </div>
             <div class="alert-badge">HIGH RISK</div>
         </div>
-
         <div class="alert-grid">
             <div class="alert-item"><div class="alert-label">Person</div><div class="alert-value">Person ID 3</div></div>
             <div class="alert-item"><div class="alert-label">Camera</div><div class="alert-value">Main Entrance</div></div>
             <div class="alert-item"><div class="alert-label">Time</div><div class="alert-value">10:05</div></div>
             <div class="alert-item clickable" onclick="openEvidence()"><div class="alert-label">Action</div><div class="alert-value">Review Evidence</div></div>
         </div>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:18px;">
+    <section class="card" style="margin-top:22px;">
         <h2>⚠ AI Threat Prediction</h2>
         <div class="prediction-box">
             <div class="prediction-score">84%<small>HIGH RISK</small></div>
             <div>
-                <h3 style="margin:0;">Suspicious Behavior Probability</h3>
+                <h3 style="margin:0;font-size:1.5rem;">Suspicious Behavior Probability</h3>
                 <p style="color:#94a3b8;">Person ID 3 shows escalating suspicious activity.</p>
                 <div class="risk-line"><div class="risk-fill"></div></div>
                 <ul>
@@ -687,33 +713,18 @@ th {
                 </ul>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:18px;">
+    <section class="card" style="margin-top:22px;">
         <h2>📁 Evidence Review</h2>
         <div class="evidence-grid">
-            <div class="evidence" onclick="openEvidence()">
-                <b>Snapshot Evidence</b><br>
-                Incident ID: VG-071<br>
-                Camera: Main Entrance<br>
-                Status: Ready<br><br>
-                <button>Open Evidence</button>
-            </div>
-            <div class="evidence" onclick="openEvidence()">
-                <b>Video Clip</b><br>
-                Duration: 10 seconds<br>
-                Event: Loitering<br>
-                Status: Ready<br><br>
-                <button>Play Clip</button>
-            </div>
-            <div class="evidence">
-                <b>AI Summary</b><br>
-                Person returned multiple times and triggered a high-risk alert.
-            </div>
+            <div class="evidence" onclick="openEvidence()"><b>Snapshot Evidence</b><br>Incident ID: VG-071<br>Camera: Main Entrance<br>Status: Ready<br><br><button>Open Evidence</button></div>
+            <div class="evidence" onclick="openEvidence()"><b>Video Clip</b><br>Duration: 10 seconds<br>Event: Loitering<br>Status: Ready<br><br><button>Play Clip</button></div>
+            <div class="evidence"><b>AI Summary</b><br>Person returned multiple times and triggered a high-risk alert.</div>
         </div>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:18px;">
+    <section class="card" style="margin-top:22px;">
         <h2>🧠 AI Security Capabilities</h2>
         <div class="feature-grid">
             <div class="feature"><b>🤖 AI Incident Summary</b><br>Automatically explains suspicious events in natural language.</div>
@@ -723,14 +734,12 @@ th {
             <div class="feature"><b>👤 Multi-Camera Tracking</b><br>Track the same person across multiple cameras.</div>
             <div class="feature"><b>📄 AI Security Report</b><br>Generate incident reports instantly.</div>
         </div>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:18px;">
+    <section class="card" style="margin-top:22px;">
         <h2>🤖 Try VisionGuard AI</h2>
-        <p style="color:#94a3b8;">
-            Ask questions like a real security operator.
-        </p>
-        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px;">
+        <p style="color:#94a3b8;">Ask questions like a real security operator.</p>
+        <div class="feature-grid">
             <button onclick="askDemo('Who loitered today?')">👤 Who loitered today?</button>
             <button onclick="askDemo('Show latest evidence')">📹 Show latest evidence</button>
             <button onclick="askDemo('Generate security report')">📄 Generate security report</button>
@@ -738,74 +747,20 @@ th {
             <button onclick="askDemo('Summarize today incidents')">🤖 Summarize today incidents</button>
             <button onclick="askDemo('Show all high risk events')">🚨 Show all high-risk events</button>
         </div>
-    </div>
-<div class="footer">
+    </section>
 
-    <h2>🚀 Need an AI CCTV, Computer Vision, or AI Assistant Solution?</h2>
-
-    <p class="contact">
-
-        Built by <b>Urifatul Jannah</b><br>
-        Computer Vision & AI Developer
-
-        <br><br>
-
-        📧 <b>Email:</b>
-        <a href="mailto:Jannahurifa04@gmail.com" style="color:#9f7aea;text-decoration:none;">
-            Jannahurifa04@gmail.com
-        </a>
-
-        <br>
-
-        📱 <b>WhatsApp:</b>
-        <a href="https://wa.me/6585862675?text=Hi%20Urifatul,%20I%20am%20interested%20in%20your%20AI%20CCTV%20solution."
-        target="_blank"
-        style="color:#9f7aea;text-decoration:none;">
-            +65 8586 2675
-        </a>
-
-        <br>
-
-        💼 <b>LinkedIn:</b>
-        <a href="https://www.linkedin.com/in/urifa-jannah-185177415"
-        target="_blank"
-        style="color:#9f7aea;text-decoration:none;">
-            linkedin.com/in/urifa-jannah-185177415
-        </a>
-
-        <br><br>
-
-        <b>Available for:</b><br>
-
-        ✅ AI CCTV Solutions<br>
-        ✅ Computer Vision Projects<br>
-        ✅ AI Assistant & RAG Development<br>
-        ✅ Freelance Projects<br>
-        ✅ Remote Collaboration
-
-    </p>
-
-    <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:20px;">
-
-        <a href="mailto:Jannahurifa04@gmail.com">
-            <button>📧 Email Me</button>
-        </a>
-
-        <a href="https://wa.me/6585862675?text=Hi%20Urifatul,%20I%20am%20interested%20in%20your%20AI%20CCTV%20solution."
-        target="_blank">
-            <button>💬 WhatsApp</button>
-        </a>
-
-        <a href="https://www.linkedin.com/in/urifa-jannah-185177415"
-        target="_blank">
-            <button>💼 LinkedIn</button>
-        </a>
-
-    </div>
-
+    <footer id="contact" class="footer">
+        <h2>🚀 Need an AI CCTV, Computer Vision, or AI Assistant Solution?</h2>
+        <p class="contact">
+            Built by <b>Urifatul Jannah</b><br>
+            Computer Vision & AI Developer<br><br>
+            📧 <b>Email:</b> <a href="mailto:Jannahurifa04@gmail.com">Jannahurifa04@gmail.com</a><br>
+            📱 <b>WhatsApp:</b> <a href="https://wa.me/6585862675?text=Hi%20Urifatul,%20I%20am%20interested%20in%20your%20AI%20CCTV%20solution." target="_blank">+65 8586 2675</a><br>
+            💼 <b>LinkedIn:</b> <a href="https://www.linkedin.com/in/urifa-jannah-185177415" target="_blank">linkedin.com/in/urifa-jannah-185177415</a><br><br>
+            ✅ AI CCTV Solutions • ✅ Computer Vision Projects • ✅ AI Assistant & RAG Development • ✅ Remote Collaboration
+        </p>
+    </footer>
 </div>
-
-</div> <!-- closes page -->
 
 <div id="evidenceModal" class="modal">
     <div class="modal-content">
@@ -814,13 +769,11 @@ th {
                 <h2 style="margin:0;">📁 Evidence Review · Incident VG-071</h2>
                 <p style="color:#94a3b8;margin:6px 0 0;">Main Entrance · Watchlist Alert · High Risk</p>
             </div>
-            <button class="close" onclick="closeEvidence()">Close</button>
+            <button class="btn close" onclick="closeEvidence()">Close</button>
         </div>
-
         <div class="evidence-layout">
             <div>
                 <video id="evidenceVideo" class="evidence-video" src="demo_clip.mp4" controls muted loop></video>
-
                 <div class="timeline">
                     <b>Incident Timeline</b>
                     <div class="timeline-item"><div class="time">09:12</div><div>Person entered Main Entrance</div></div>
@@ -828,16 +781,12 @@ th {
                     <div class="timeline-item"><div class="time">10:05</div><div>Watchlist alert triggered again</div></div>
                 </div>
             </div>
-
             <div class="ai-summary">
                 <h3>🤖 AI Incident Summary</h3>
                 <p><b>Person:</b> Person ID 3</p>
                 <p><b>Risk Level:</b> High</p>
                 <p><b>Confidence:</b> 96%</p>
-                <p>
-                    Person ID 3 was detected near the Main Entrance and triggered a high-risk watchlist alert.
-                    The system identified suspicious loitering behavior and repeated appearance history.
-                </p>
+                <p>Person ID 3 was detected near the Main Entrance and triggered a high-risk watchlist alert. The system identified suspicious loitering behavior and repeated appearance history.</p>
                 <p><b>Recommended Action:</b></p>
                 <ul>
                     <li>Review the evidence clip</li>
@@ -850,76 +799,26 @@ th {
 </div>
 
 <script>
-function getDemoAnswer(question){
-    const q = (question || "").toLowerCase().trim();
+const answers = {
+    loiter: `<b>Loitering Incident Detected</b><br><br>Person ID 3 remained near the Main Entrance for <b>48 seconds</b> at 09:18.<br><br><b>Risk Level:</b> Medium<br><b>AI Recommendation:</b> Review the evidence clip and monitor if the person returns.`,
+    risk: `<b>Highest Risk Person Identified</b><br><br>Person ID 3 currently has the highest risk score.<br><br><b>Reason:</b><br>• Repeated loitering behavior<br>• Watchlist match history<br>• Returned multiple times today<br>• Abnormal stay duration near entrance<br><br><b>Risk Level:</b> High`,
+    evidence: `<b>Latest Evidence Found</b><br><br>Incident: WATCHLIST_ALERT<br>Time: 10:05<br>Person: Person ID 3<br>Camera: Main Entrance<br><br><b>Evidence:</b> Snapshot and incident video clip are ready for review.<br><br><button onclick="openEvidence()">Open Evidence Review</button>`,
+    report: `<b>AI Security Report</b><br><br>Total events today: 3<br>Loitering incidents: 1<br>Watchlist alerts: 1<br>Highest risk person: Person ID 3<br><br><b>Overall Risk:</b> Medium to High<br><b>Recommended Action:</b> Review evidence and monitor Main Entrance.`
+};
 
-    if(q.includes("loiter")){
-        return `
-        <b>Loitering Incident Detected</b><br><br>
-        Person ID 3 remained near the Main Entrance for <b>48 seconds</b> at 09:18.<br><br>
-        <b>Risk Level:</b> Medium<br>
-        <b>AI Recommendation:</b> Review the evidence clip and monitor if the person returns.
-        `;
-    }
-
-    if(q.includes("highest risk") || q.includes("suspicious") || q.includes("risk")){
-        return `
-        <b>Highest Risk Person Identified</b><br><br>
-        Person ID 3 currently has the highest risk score.<br><br>
-        <b>Reason:</b><br>
-        • Repeated loitering behavior<br>
-        • Watchlist match history<br>
-        • Returned multiple times today<br>
-        • Abnormal stay duration near entrance<br><br>
-        <b>Risk Level:</b> High
-        `;
-    }
-
-    if(q.includes("evidence") || q.includes("clip") || q.includes("video")){
-        return `
-        <b>Latest Evidence Found</b><br><br>
-        Incident: WATCHLIST_ALERT<br>
-        Time: 10:05<br>
-        Person: Person ID 3<br>
-        Camera: Main Entrance<br><br>
-        <b>Evidence:</b> Snapshot and incident video clip are ready for review.<br><br>
-        <button onclick="openEvidence()">Open Evidence Review</button>
-        `;
-    }
-
-    if(q.includes("report") || q.includes("summary")){
-        return `
-        <b>AI Security Report</b><br><br>
-        Total events today: 3<br>
-        Loitering incidents: 1<br>
-        Watchlist alerts: 1<br>
-        Highest risk person: Person ID 3<br><br>
-        <b>Overall Risk:</b> Medium to High<br>
-        <b>Recommended Action:</b> Review evidence and monitor Main Entrance.
-        `;
-    }
-
-    if(q.includes("entered") || q.includes("enter")){
-        return `
-        <b>Entry Event Found</b><br><br>
-        Person ID 1 entered the Main Entrance at 09:12.<br>
-        Risk Level: Low.
-        `;
-    }
-
-    return `
-    <b>VisionGuard AI Assistant</b><br><br>
-    I can answer demo CCTV questions.<br><br>
-    Try asking:<br>
-    • Who loitered today?<br>
-    • Who has highest risk?<br>
-    • Show latest evidence<br>
-    • Generate security report
-    `;
+function demoAnswer(question){
+    const q = question.toLowerCase().trim();
+    if(q.includes("loiter")) return answers.loiter;
+    if(q.includes("risk") || q.includes("suspicious")) return answers.risk;
+    if(q.includes("evidence") || q.includes("clip") || q.includes("video")) return answers.evidence;
+    if(q.includes("report") || q.includes("summary")) return answers.report;
+    if(q.includes("enter")) return `<b>Entry Event Found</b><br><br>Person ID 1 entered the Main Entrance at 09:12.<br>Risk Level: Low.`;
+    return `<b>VisionGuard AI Assistant</b><br><br>I can answer demo CCTV questions.<br><br>Try asking:<br>• Who loitered today?<br>• Who has highest risk?<br>• Show latest evidence<br>• Generate security report`;
 }
 
 function askDemo(text=null){
-    let q = text || document.getElementById("q").value;
+    const input = document.getElementById("q");
+    const q = text || input.value;
     if(!q) return;
 
     const chat = document.getElementById("chat");
@@ -935,10 +834,10 @@ function askDemo(text=null){
     chat.appendChild(aiMsg);
 
     chat.scrollTop = chat.scrollHeight;
-    document.getElementById("q").value = "";
+    input.value = "";
 
     setTimeout(() => {
-        aiMsg.innerHTML = getDemoAnswer(q);
+        aiMsg.innerHTML = demoAnswer(q);
         chat.scrollTop = chat.scrollHeight;
     }, 450);
 }
@@ -949,43 +848,28 @@ const alertChip = document.getElementById("alertChip");
 const metaBox = document.getElementById("metaBox");
 const video = document.querySelector(".video-main");
 
-detectBox.style.display = "none";
-detectLabel.style.display = "none";
+function setOverlay(show){
+    detectBox.style.display = show ? "block" : "none";
+    detectLabel.style.display = show ? "block" : "none";
+    metaBox.style.display = show ? "block" : "none";
+}
+
+setOverlay(false);
 alertChip.style.display = "none";
-metaBox.style.display = "none";
 
 setInterval(() => {
-    if (!video) return;
-
+    if(!video) return;
     const t = video.currentTime;
-
-    // Person appears twice in this demo video:
-    // 1st appearance: 3.5s - 8.8s
-    // 2nd appearance: 20.5s - 32.8s
-    if ((t >= 3.5 && t <= 8.8) || (t >= 20.5 && t <= 32.8)) {
-        detectBox.style.display = "block";
-        detectLabel.style.display = "block";
-        metaBox.style.display = "block";
-    } else {
-        detectBox.style.display = "none";
-        detectLabel.style.display = "none";
-        metaBox.style.display = "none";
-    }
-
-    // Loitering alert appears only during the second longer stay
-    if (t >= 27 && t <= 32.8) {
-        alertChip.style.display = "block";
-    } else {
-        alertChip.style.display = "none";
-    }
-
+    const personVisible = (t >= 3.5 && t <= 8.8) || (t >= 20.5 && t <= 32.8);
+    setOverlay(personVisible);
+    alertChip.style.display = (t >= 27 && t <= 32.8) ? "block" : "none";
 }, 200);
 
 function openEvidence(){
     const modal = document.getElementById("evidenceModal");
     const video = document.getElementById("evidenceVideo");
     modal.style.display = "flex";
-    setTimeout(() => video.play(), 150);
+    setTimeout(()=>video.play(),150);
 }
 
 function closeEvidence(){
@@ -995,6 +879,5 @@ function closeEvidence(){
     modal.style.display = "none";
 }
 </script>
-
 </body>
 </html>
