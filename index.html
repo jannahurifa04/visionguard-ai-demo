@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VisionGuard AI Demo</title>
+    <style>
+        body{margin:0;background:#070b16;color:white;font-family:Arial,sans-serif}
+        .page{padding:24px;max-width:1200px;margin:auto}
+        .hero{padding:50px;border-radius:24px;background:linear-gradient(135deg,#5b21b6,#111827);text-align:center}
+        .hero h1{font-size:52px;margin:10px 0}
+        .hero p{color:#cbd5e1;font-size:18px}
+        .btn{display:inline-block;background:#7c3aed;color:white;padding:14px 18px;border-radius:12px;text-decoration:none;margin:8px;font-weight:bold}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+        .card{background:#111827;border:1px solid #273449;border-radius:18px;padding:22px}
+        video{width:100%;border-radius:16px;border:2px solid #4f46e5}
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+        .feature{background:#020617;border:1px solid #253047;border-radius:14px;padding:16px}
+        button{background:#7c3aed;color:white;border:0;padding:12px 14px;border-radius:11px;margin:5px;cursor:pointer;font-weight:bold}
+        input{width:75%;padding:13px;border-radius:11px;border:1px solid #334155;background:#020617;color:white}
+        .chat{background:#020617;border:1px solid #253047;border-radius:14px;padding:16px;margin-top:14px;min-height:150px}
+        .user{background:#7c3aed;padding:12px;border-radius:12px;margin:8px 0;margin-left:auto;max-width:80%}
+        .ai{background:#111827;border:1px solid #334155;padding:12px;border-radius:12px;margin:8px 0;max-width:85%}
+        .footer{text-align:center;margin-top:24px;padding:30px;background:linear-gradient(135deg,#312e81,#111827);border-radius:20px}
+        a{color:#a78bfa}
+        @media(max-width:900px){.grid,.features{grid-template-columns:1fr}.hero h1{font-size:38px}}
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="hero">
+        <div>ENTERPRISE AI CCTV DEMO</div>
+        <h1>VisionGuard AI</h1>
+        <p>Transform CCTV footage into an AI security assistant.</p>
+        <a class="btn" href="#demo">Watch Demo</a>
+        <a class="btn" href="#contact">Contact Me</a>
+    </div>
+
+    <div class="grid" id="demo">
+        <div class="card">
+            <h2>📹 AI CCTV Monitoring</h2>
+            <video src="demo_clip.mp4" autoplay muted loop controls></video>
+            <p style="color:#94a3b8">Demo CCTV video with AI detection overlay concept.</p>
+        </div>
+
+        <div class="card">
+            <h2>🤖 AI Security Assistant</h2>
+            <button onclick="ask('Who loitered today?')">Who loitered today?</button>
+            <button onclick="ask('Show latest evidence')">Latest evidence</button>
+            <button onclick="ask('Generate security report')">Security report</button>
+            <br><br>
+            <input id="q" placeholder="Ask about CCTV events...">
+            <button onclick="ask()">Ask</button>
+            <div id="chat" class="chat">
+                <div class="user">Who loitered today?</div>
+                <div class="ai"><b>Loitering Incident Detected</b><br>Person ID 3 remained near the Main Entrance for 48 seconds. Risk Level: Medium.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+        <h2>🧠 AI Security Capabilities</h2>
+        <div class="features">
+            <div class="feature">✅ Suspicious behavior detection</div>
+            <div class="feature">✅ Loitering alerts</div>
+            <div class="feature">✅ Evidence video review</div>
+            <div class="feature">✅ Natural language CCTV search</div>
+            <div class="feature">✅ AI incident summaries</div>
+            <div class="feature">✅ Security report generation</div>
+        </div>
+    </div>
+
+    <div class="footer" id="contact">
+        <h2>🚀 Need an AI CCTV or Computer Vision Solution?</h2>
+        <p>
+            Built by <b>Urifatul Jannah</b><br>
+            Computer Vision & AI Developer<br><br>
+            📧 <a href="mailto:Jannahurifa04@gmail.com">Jannahurifa04@gmail.com</a><br>
+            📱 <a href="https://wa.me/6585862675?text=Hi%20Urifatul,%20I%20am%20interested%20in%20your%20AI%20CCTV%20solution.">WhatsApp: +65 8586 2675</a><br>
+            💼 <a href="https://www.linkedin.com/in/urifa-jannah-185177415">LinkedIn Profile</a>
+        </p>
+    </div>
+
+</div>
+
+<script>
+function ask(text=null){
+    const q = text || document.getElementById("q").value;
+    if(!q) return;
+
+    let answer = "I can help investigate CCTV events, evidence clips, risks, and security reports.";
+
+    const lower = q.toLowerCase();
+
+    if(lower.includes("loiter")){
+        answer = "<b>Loitering Incident Detected</b><br>Person ID 3 stayed near the Main Entrance for 48 seconds. Risk Level: Medium.";
+    } else if(lower.includes("evidence")){
+        answer = "<b>Latest Evidence</b><br>Camera: Main Entrance<br>Incident: Watchlist Alert<br>Status: Video clip ready for review.";
+    } else if(lower.includes("report") || lower.includes("summary")){
+        answer = "<b>AI Security Report</b><br>Total events: 3<br>Loitering: 1<br>Watchlist alert: 1<br>Highest risk: Person ID 3.";
+    } else if(lower.includes("risk")){
+        answer = "<b>Highest Risk</b><br>Person ID 3 has the highest risk because of repeated loitering and watchlist activity.";
+    }
+
+    document.getElementById("chat").innerHTML +=
+        '<div class="user">'+q+'</div><div class="ai">'+answer+'</div>';
+
+    document.getElementById("q").value = "";
+}
+</script>
+</body>
+</html>
