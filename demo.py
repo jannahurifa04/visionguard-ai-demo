@@ -702,8 +702,8 @@ th {{
             <h2>📹 AI CCTV Monitoring</h2>
 
             <div class="camera">
-                <video class="video-bg" src="/static/demo_clip.mp4" autoplay muted loop playsinline></video>
-                <video class="video-main" src="/static/demo_clip.mp4" autoplay muted loop playsinline></video>
+                <video class="video-bg" src="/demo_clip.mp4" autoplay muted loop playsinline></video>
+                <video class="video-main" src="/demo_clip.mp4" autoplay muted loop playsinline></video>
 
                 <div class="rec">● REC</div>
                 <div class="cam-id">CAM 01 · Main Entrance</div>
@@ -912,7 +912,7 @@ th {{
 
         <div class="evidence-layout">
             <div>
-                <video id="evidenceVideo" class="evidence-video" src="/static/demo_clip.mp4" controls muted loop></video>
+                <video id="evidenceVideo" class="evidence-video" src="/demo_clip.mp4" controls muted loop></video>
 
                 <div class="timeline">
                     <b>Incident Timeline</b>
