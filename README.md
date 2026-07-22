@@ -1,5 +1,7 @@
 # VisionGuard AI
 
+![VisionGuard AI Architecture](./VisionGuard_AI_Architecture.png)
+
 **VisionGuard AI** is an AI-powered CCTV monitoring and incident intelligence prototype built to transform camera footage into searchable events, evidence, alerts, and natural-language answers.
 
 ## Demo
